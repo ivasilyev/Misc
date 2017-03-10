@@ -10,12 +10,16 @@ This script allows to parse **MILLIONS** of KEGG entries within a very short tim
 ```
 kegg_parser.py -i KEGG_list.txt -o KEGG_table.txt
 ```
-
+##column_extractor
+A simple multi-core tool for separation of one or few columns from table containing too large cells which cannot be processed by excel, pandas etc.
+```
+python column_extractor.py -i big_table.txt -d "\t" -c "0,3,5"
+``` 
+This will extract tab-delimited 1st, 4th and 6th column into a file "big_table_0,3,5.txt". 
 ##filechecker_empty
 A tool for detection of zero-sized files within the specified directory containing large amount of files. However, it does not see file starting with special symbols, e.g. dots. 
 ```
 filechecker_empty.py -i big_directory -o out.txt
-
 ```
 ##filechecker_exist
 This tool retrieves two filelists from directories or text files and looks for missing filenames or text entries using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) for each fileset with both directions. 
@@ -30,4 +34,3 @@ Easily extract a list of missing (file)names:
 ```
 grep MISSING mask_straight.txt | awk -v OFS='\t' {'print $1'} > to_do.txt
 ```
-

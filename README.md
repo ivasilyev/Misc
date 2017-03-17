@@ -3,26 +3,41 @@ The repository for my compact-sized tools.
 
 >**WARNINGS/DISCLAIMERS**
 
-> Every script is published for educational purposes only. Its code is presented "as is" and might not work in some cases. Make sure you have made all necessary changes in configuration parts and use help option!
+> Every script is published for educational purposes only. Its code is presented "as is" and might not work in some cases. Make sure you have made all necessary changes in configuration parts and use help (*-h*) option!
 
-##kegg_parser
+## SingleBee_mp
+This script is just a multi-core optimized [fork](https://github.com/ivasilyev/ThreeBees) of our existing project. It will take a single-column list of *csfasta* files with absolute paths, perform a single alignment (meant as "bee") it and collect the coverage statistics within the specified folder into *bp* or *pos* text files (short explanation can be found [here](https://github.com/ivasilyev/ThreeBees/blob/master/msbA.png)). **You must specify all necessary paths and references** in the configuration part. However, the script is sensitive to [keyboard interrupts](https://docs.python.org/2/library/exceptions.html), so **it is highly recommended to release the input** by the master command like:
+```
+nohup python SingleBee_mp.py -i weekly_csfasta.txt -d friday_dir -o alignment_for_weekend > /dev/null 2>&1 & echo $! > run.pid
+```
+You can generate the *csfasta* list with absolute paths by the following step:
+```
+ ls -d <absolute path to your dir starting with slash>/* | grep ".csfasta" > samples.txt
+```
+Feel free to use files from different sources.
+
+
+## kegg_parser
 This script allows to parse **MILLIONS** of KEGG entries within a very short time through [API](http://www.kegg.jp/kegg/docs/keggapi.html) using [pandas](http://pandas.pydata.org/) and [sh](https://amoffat.github.io/sh/) libraries from a single-column list into the table containing following columns: *ENTRY, NAME, DEFINITION, PATHWAY, MODULE, DISEASE, BRITE, DBLINKS, GENES*.
 ```
 kegg_parser.py -i KEGG_list.txt -o KEGG_table.txt
 ```
-##column_extractor
-A simple multi-core tool for separation of one or few columns from table containing too large cells which cannot be processed by excel, pandas etc.
+
+## column_extractor
+A simple multi-core tool for separation of one or few columns from a table containing too large cells with special symbols, e.g. spaces, which cannot be processed by Excel, *pandas, awk* etc.
 ```
-python column_extractor.py -i big_table.txt -d "\t" -c "0,3,5"
+column_extractor.py -i big_table.txt -d "\t" -c "0,3,5"
 ``` 
-This will extract tab-delimited 1st, 4th and 6th column into a file "big_table_0,3,5.txt". 
-##filechecker_empty
-A tool for detection of zero-sized files within the specified directory containing large amount of files. However, it does not see file starting with special symbols, e.g. dots. 
+This will extract tab-delimited 1st, 4th and 6th columns into a file *big_table_0,3,5.txt*. 
+
+## filechecker_empty
+A tool for detection of zero-sized files within the specified directory containing pretty large amount of files. However, it does not see files starting with special symbols, e.g. dots. 
 ```
 filechecker_empty.py -i big_directory -o out.txt
 ```
-##filechecker_exist
-This tool retrieves two filelists from directories or text files and looks for missing filenames or text entries using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) for each fileset with both directions. 
+
+## filechecker_exist
+This tool retrieves two filelists from existing directories or text files and looks for missing filenames or text entries using [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) for each fileset with both directions. 
 ```
 filechecker_exist.py -a directory1 -b directory2 -z "(.*).txt" -y "(.*).not.quiet.txt" -o mask
 ```
@@ -30,7 +45,7 @@ Else:
 ```
 filechecker_exist.py -a ls.log -b directory2 -z "(.*).txt" -y "(.*).not.quiet.txt" -o mask
 ```
-Easily extract a list of missing (file)names:
+Easily extract the list of missing (file)names:
 ```
 grep MISSING mask_straight.txt | awk -v OFS='\t' {'print $1'} > to_do.txt
 ```

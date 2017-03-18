@@ -28,7 +28,7 @@ A simple multi-core tool for separation of one or few columns from a table conta
 ```
 column_extractor.py -i big_table.txt -d "\t" -c "0,3,5"
 ``` 
-This will extract tab-delimited 1st, 4th and 6th columns into a file *big_table_0,3,5.txt*. 
+This will extract tab-delimited (by default) 1st, 4th and 6th columns into a file *big_table_cols_0,3,5.txt*. 
 
 ## filechecker_empty
 A tool for detection of zero-sized files within the specified directory containing pretty large amount of files. However, it does not see files starting with special symbols, e.g. dots. 
@@ -49,3 +49,10 @@ Easily extract the list of missing (file)names:
 ```
 grep MISSING mask_straight.txt | awk -v OFS='\t' {'print $1'} > to_do.txt
 ```
+
+## regex_slicer
+A script for [regex](https://en.wikipedia.org/wiki/Regular_expression)-based file chopping using [numpy](http://www.numpy.org/) package:
+```
+regex_slicer.py -i reference.fasta -n 3 -p ">"
+```
+It will cut *reference.fasta* to files *reference_chunk_1.fasta, reference_chunk_2.fasta, reference_chunk_3.fasta.* By default, the splitting expression is *"\n"*. **Note that all empty strings will be removed.**

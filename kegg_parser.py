@@ -10,9 +10,9 @@ import pandas
 
 
 def usage():
-    print("Usage: " + sys.argv[0] + " -i <file> -o <file>" + "\n\n" +
-          "-i/--input <file> \t\tText file containing KEGG entries one per line" + "\n" +
-          "-o/--output <file> \t\tFile to create" + "\n")
+    print("\nUsage: " + sys.argv[0] + " -i <file> -o <file>" + "\n\n" +
+          "-i/--input <file> \tText file containing KEGG entries one per line" + "\n" +
+          "-o/--output <file> \tFile to create" + "\n")
     sys.exit(2)
 
 

@@ -8,8 +8,9 @@ import multiprocessing
 
 
 def usage():
-    print("Usage: " + sys.argv[0] + " -i/--input <dir> \t\tFolder to scan for empty files" + "\n" +
-          "-o/--output <file> \t\tWhere to keep results" + "\n")
+    print("\nUsage: " + sys.argv[0] + " -i <dir> -o <file>" + "\n\n"
+          "-i/--input <dir> \tFolder to scan for empty files" + "\n" +
+          "-o/--output <file> \tWhere to keep results" + "\n")
     sys.exit(2)
 
 

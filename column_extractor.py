@@ -7,9 +7,9 @@ import sys
 
 
 def usage():
-    print("Usage: " + sys.argv[0] + " -i <file> -d <symbol> -c <list>" + "\n\n" +
-          "-i/--input <file> \t\tText table file" + "\n" +
-          "-d/--delimiter <symbol> \t\tColumn delimiter without quotes" + "\n" +
+    print("\nUsage: " + sys.argv[0] + " -i <file> -d <symbol> -c <list>" + "\n\n" +
+          "-i/--input <file> \tText table file" + "\n" +
+          "-d/--delimiter <symbol> \tColumn delimiter without quotes" + "\n" +
           "-c/--columns <list> \tComma-separated zero-beginning list of columns to export" + "\n")
     sys.exit(2)
 
@@ -33,7 +33,7 @@ def main():
             d = str(arg)
         elif opt in ("-c", "--columns"):
             c = str(arg)
-    if not any(var is None for var in [i, d, c]):
+    if not any(var is None for var in [i, c]):
         return i, d, c
     print("The parameters are not yet specified!")
     usage()
@@ -53,6 +53,8 @@ def coding_python_version_check():
 
 def string_process(string, delimiter, column_list):
     string = string.replace('\n', '')
+    if delimiter is None:
+        delimiter = "\t"
     delimiter = delimiter.decode(coding_python_version_check())
     if string:  # is not empty
         columns = []
@@ -87,4 +89,4 @@ pool.close()
 pool.join()
 outTable = "".join(str(string) for string in pool_table if string is not None)
 
-var_to_file(outTable, str('.'.join(inputFile.split('.')[:-1]) + '_' + columnsList + ".txt"))
+var_to_file(outTable, str('.'.join(inputFile.split('.')[:-1]) + '_columns_' + str(columnsList) + '.' + inputFile.split('.')[-1]))

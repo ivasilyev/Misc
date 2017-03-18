@@ -25,8 +25,8 @@ import sys
 
 
 def usage():
-    print("Usage: " + sys.argv[0] + " -i <file> -d <dir> -o <str>" + "\n\n" +
-          "-i/--input <file> \tText table file" + "\n" +
+    print("\nUsage: " + sys.argv[0] + " -i <file> -d <dir> -o <str>" + "\n\n" +
+          "-i/--input <file> \tList of *.csfasta files" + "\n" +
           "-d/--directory <dir> \tDirectory to keep results" + "\n"
           "-o/--output <str> \tMask to be added to the resulting files" + "\n")
     sys.exit(2)

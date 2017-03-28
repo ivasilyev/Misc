@@ -12,15 +12,20 @@ nohup python SingleBee_mp.py -i weekly_csfasta.txt -d friday_dir -o alignment_fo
 ```
 You can generate the *csfasta* list with absolute paths by the following step:
 ```
- ls -d <absolute path to your dir starting with slash>/* | grep ".csfasta" > samples.txt
+ ls -d <absolute path to your dir starting with slash>/* | grep -i ".csfasta" > samples.txt
 ```
 Feel free to use files from different sources.
 
-
 ## kegg_parser
-This script allows to parse **MILLIONS** of KEGG entries within a very short time through [API](http://www.kegg.jp/kegg/docs/keggapi.html) using [pandas](http://pandas.pydata.org/) and [sh](https://amoffat.github.io/sh/) libraries from a single-column list into the table containing following columns: *ENTRY, NAME, DEFINITION, PATHWAY, MODULE, DISEASE, BRITE, DBLINKS, GENES*.
+This script allows to parse **MILLIONS** of KEGG Orthology DB (*KXXXXX*) entries within a very short time through [API](http://www.kegg.jp/kegg/docs/keggapi.html) using [pandas](http://pandas.pydata.org/) and [sh](https://amoffat.github.io/sh/) libraries from a single-column list into the table containing following columns: *ENTRY, NAME, DEFINITION, PATHWAY, MODULE, DISEASE, BRITE, DBLINKS, GENES*.
 ```
-kegg_parser.py -i KEGG_list.txt -o KEGG_table.txt
+kegg_parser.py -i KEGG_KO_list.txt -o KEGG_table.txt
+```
+
+## kegg_compounds2orthologs
+Similar to the previous one, but performs a search by KEGG DB Compound DB IDs (*CXXXXX*) and dumps results in the following columns: *KEGG Compound, Synonyms, KEGG Enzymes, KEGG orthologs*.
+```
+kegg_compounds2orthologs.py -i KEGG_CD_list.txt -o KEGG_CD_with_KO_table.txt
 ```
 
 ## column_extractor
@@ -28,7 +33,22 @@ A simple multi-core tool for separation of one or few columns from a table conta
 ```
 column_extractor.py -i big_table.txt -d "\t" -c "0,3,5"
 ``` 
-This will extract tab-delimited (by default) 1st, 4th and 6th columns into a file *big_table_cols_0,3,5.txt*. 
+This will extract tab-delimited (by default) 1st, 4th and 6th columns into a file *big_table_columns_0,3,5.txt* (zero-based). 
+
+## make_table_great_again
+A combining tool to merge all files from table without a header with sample names and related paths with header-supplied existing table by the specified index column into large dataframe using [pandas](http://pandas.pydata.org/) library.
+```
+make_table_great_again.py -i sampledata.txt -t annotation.txt -c index_id -o combined_samples
+```
+This will produce *annotation_merged_by_index_id_raw_data.txt* and *annotation_merged_by_index_id_percentage.txt* into the *combined_samples* directory.
+
+##percentage_plot
+This script allows to visualize a specified part of the existing dataframe through a heatmap. As an option, the percentage may be calculated from the given external data containing tab-delimited sample name and pre-calculated total sum. The required packages are [pandas](http://pandas.pydata.org/), [matplotlib](http://matplotlib.org/) and [seaborn](https://seaborn.pydata.org/).
+```
+python3 percentage_plot.py -i sampledata.txt -t dataframe_with_header.txt -s sum.txt -c index_id -o heatmap_1
+
+```
+Like the previous, resulting it dataframes with raw and percentage data supplied with the heatmaps would be created created into the *heatmap_1* directory.
 
 ## filechecker_empty
 A tool for detection of zero-sized files within the specified directory containing pretty large amount of files. However, it does not see files starting with special symbols, e.g. dots. 

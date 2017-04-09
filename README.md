@@ -14,7 +14,21 @@ You can generate the *csfasta* list with absolute paths by the following step:
 ```
  ls -d <absolute path to your dir starting with slash>/* | grep -i ".csfasta" > samples.txt
 ```
-Feel free to use files from different sources.
+Files from different sources also applicable.
+
+## cook_the_reference
+Cuts the reference fasta file to chunks of specified size (2 Gb default) and builds colorspace *ebwt, bt2, fai, genome* indexes and simple annotation files. Supports multiprocessing.
+```
+cook_the_reference.py -i hg19.fasta -s 2 -t 8 -o /data/reference/hg19/index
+```
+This will cut *hg19.fasta* to pieces with ~2 Gb size and process the chunks at 8 threads.
+
+## humann2_wrapper
+A wrapper for parallelizing [HUMAnN2](https://bitbucket.org/biobakery/humann2/wiki/Home) pipeline. May use custom input string.
+```
+humann2_wrapper.py -i ls.log -o humann2_crohn -c 10
+```
+This action allows to create 10 HUMAnN2 pipelines in time using absolute paths stored in the *ls.log* file.
 
 ## kegg_parser
 This script allows to parse **MILLIONS** of KEGG Orthology DB (*KXXXXX*) entries within a very short time through [API](http://www.kegg.jp/kegg/docs/keggapi.html) using [pandas](http://pandas.pydata.org/) and [sh](https://amoffat.github.io/sh/) libraries from a single-column list into the table containing following columns: *ENTRY, NAME, DEFINITION, PATHWAY, MODULE, DISEASE, BRITE, DBLINKS, GENES*.
@@ -35,6 +49,12 @@ column_extractor.py -i big_table.txt -d "\t" -c "0,3,5"
 ``` 
 This will extract tab-delimited (by default) 1st, 4th and 6th columns into a file *big_table_columns_0,3,5.txt* (zero-based). 
 
+## table_grep
+Opposite to the previous, this tool allows to make a subtable containing special substring from the bigger table using [sh](https://pypi.python.org/pypi/sh) library.
+```
+table_grep.py -i big_table.txt -k new_keyword -o key_table.txt
+```
+
 ## make_table_great_again
 A combining tool to merge all files from table without a header with sample names and related paths with header-supplied existing table by the specified index column into large dataframe using [pandas](http://pandas.pydata.org/) library.
 ```
@@ -42,13 +62,18 @@ make_table_great_again.py -i sampledata.txt -t annotation.txt -c index_id -o com
 ```
 This will produce *annotation_merged_by_index_id_raw_data.txt* and *annotation_merged_by_index_id_percentage.txt* into the *combined_samples* directory.
 
-##percentage_plot
+## sum_count
+Given a table and zero-based columns inexes list, returns column name and sum of values for each column. Requires [pandas](http://pandas.pydata.org/) package.
+```
+sum_count.py -i input_table -c 1,2,4 -o output_table
+```
+
+## percentage_plot
 This script allows to visualize a specified part of the existing dataframe through a heatmap. As an option, the percentage may be calculated from the given external data containing tab-delimited sample name and pre-calculated total sum. The required packages are [pandas](http://pandas.pydata.org/), [matplotlib](http://matplotlib.org/) and [seaborn](https://seaborn.pydata.org/).
 ```
 python3 percentage_plot.py -i sampledata.txt -t dataframe_with_header.txt -s sum.txt -c index_id -o heatmap_1
-
 ```
-Like the previous, resulting it dataframes with raw and percentage data supplied with the heatmaps would be created created into the *heatmap_1* directory.
+Like the previous, resulting it, dataframes with raw and percentage data supplied with the heatmaps would be created created into the *heatmap_1* directory.
 
 ## filechecker_empty
 A tool for detection of zero-sized files within the specified directory containing pretty large amount of files. However, it does not see files starting with special symbols, e.g. dots. 

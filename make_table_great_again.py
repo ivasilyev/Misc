@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# !/usr/bin/python
+#!/usr/bin/python
 
 # The tag file must contain a header with "Gene_name" column.
 # Other files must not contain a header and have only two columns.

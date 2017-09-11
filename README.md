@@ -71,9 +71,9 @@ sum_count.py -i input_table -c 1,2,4 -o output_table
 ## percentage_plot
 This script allows to visualize a specified part of the existing dataframe through a heatmap. As an option, the percentage may be calculated from the given external data containing tab-delimited sample name and pre-calculated total sum. The required packages are [pandas](http://pandas.pydata.org/), [matplotlib](http://matplotlib.org/) and [seaborn](https://seaborn.pydata.org/).
 ```
-python3 percentage_plot.py -i sampledata.txt -t dataframe_with_header.txt -s sum.txt -c index_id -o heatmap_1
+python3 percentage_plot.py -i sampledata.txt -t dataframe_with_header.txt -s sum.txt -c index_id -o heatmap_1 -f 0.05
 ```
-Like the previous, resulting it, dataframes with raw and percentage data supplied with the heatmaps would be created created into the *heatmap_1* directory.
+Like the previous, resulting it, dataframes with raw and percentage data supplied with the heatmaps containing 0.05x-scaled axis will be created inside the *heatmap_1* directory.
 
 ## filechecker_empty
 A tool for detection of zero-sized files within the specified directory containing pretty large amount of files. However, it does not see files starting with special symbols, e.g. dots. 
@@ -101,3 +101,9 @@ A script for [regex](https://en.wikipedia.org/wiki/Regular_expression)-based fil
 regex_slicer.py -i reference.fasta -n 3 -p ">"
 ```
 It will cut *reference.fasta* to files *reference_chunk_1.fasta, reference_chunk_2.fasta, reference_chunk_3.fasta.* By default, the splitting expression is *"\n"*. **Note that all empty strings will be removed.**
+
+## afm2ped
+This script converts Thermo Fisher Affymetrix™ output data from single or multiple files into single PED file:
+```
+afm2ped.py -a DF_2017071101_ssp_bestrec_ext.txt DF_2017071401_ssp_bestrec_ext.txt -p ped0.txt -s sampledata.txt -o output.ped
+```

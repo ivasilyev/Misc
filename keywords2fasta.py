@@ -3,6 +3,7 @@
 
 import argparse
 import re
+import os
 
 
 def parse_args():
@@ -10,7 +11,7 @@ def parse_args():
     starting_parser.add_argument("-f", "--fasta", required=True, nargs='+',
                                  help="FASTA file(s)")
     starting_parser.add_argument("-k", "--keyword", required=True, nargs='+',
-                                 help="Keyword(s) to search")
+                                 help="Keyword(s) to search or containing file")
     starting_parser.add_argument("-i", "--ignore_case", default=False, action='store_true',
                                  help="Performs a case insensitive search")
     starting_parser.add_argument("-r", "--reducing", default=False, action='store_true',
@@ -29,8 +30,20 @@ def parse_namespace():
     return namespace.fasta, namespace.keyword, namespace.ignore_case, namespace.reducing, namespace.negative, namespace.output
 
 
+def file_to_list(file):
+    import re
+    file_buffer = open(file, 'rU')
+    output_list = [j for j in [re.sub('[\r\n]', '', i) for i in file_buffer] if len(j) > 0]
+    file_buffer.close()
+    return output_list
+
+
 if __name__ == '__main__':
-    inputFileList, inputWordList, ignoreCaseBool, reduceBool, negativeBool, outputFile = parse_namespace()
+    inputFileList, inputWordsFileOrLisList, ignoreCaseBool, reduceBool, negativeBool, outputFile = parse_namespace()
+    if os.path.isfile(inputWordsFileOrLisList[0]):
+        inputWordList = file_to_list(inputWordsFileOrLisList[0])
+    else:
+        inputWordList = inputWordsFileOrLisList.copy()
     outputBuffer = ""
     processedHeadersCounter = 0
     for inputFile in inputFileList:

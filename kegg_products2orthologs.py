@@ -10,7 +10,7 @@ import pandas
 
 def usage():
     print("\nUsage: " + sys.argv[0] + " -i <file> -o <file>" + "\n\n" +
-          "-i/--input <file> \tText file containing KEGG entries divided by line or semicolon" + "\n" +
+          "-i/--input <file> \tText file containing KEGG compound entries divided by line or semicolon" + "\n" +
           "-o/--output <file> \tFile to create" + "\n")
     sys.exit(2)
 

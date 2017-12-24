@@ -75,7 +75,10 @@ A script for [regex](https://en.wikipedia.org/wiki/Regular_expression)-based fil
 ```
 regex_slicer.py -i reference.fasta -n 3 -p ">"
 ```
-It will cut *reference.fasta* to files *reference_chunk_1.fasta, reference_chunk_2.fasta, reference_chunk_3.fasta.* By default, the splitting expression is *"\n"*. **Note that all empty strings will be removed.**
+It will cut *reference.fasta* to files *reference_chunk_1.fasta, reference_chunk_2.fasta, reference_chunk_3.fasta.* By default, the splitting expression is *"\n"*. **Note that all empty strings would be removed.**
+
+## table_grep
+Performs grep-based per-line table processing, also returns the table header.
 
 ## table2psqldb
 Given a PostgreSQL table address and text table, uploads the text table as SQL table. Also provides recognition of some data types.

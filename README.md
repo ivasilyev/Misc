@@ -32,9 +32,9 @@ kegg_parser.py -i KEGG_KO_list.txt -o KEGG_table.txt
 ```
 
 ## kegg_products2orthologs
-Similar to the previous one, but performs a search by KEGG DB Compound DB IDs (*CXXXXX*) and dumps results in the following columns: *KEGG Compound, Synonyms, KEGG Enzymes, KEGG orthologs*.
+Similar to the previous, but performs a search by KEGG Compound DB IDs (*CXXXXX*) for orthology IDs (KXXXXX). May remove duplicates related to different compounds.
 ```
-kegg_products2orthologs.py -i KEGG_CD_list.txt -o KEGG_CD_with_KO_table.txt
+kegg_products2orthologs.py -i KEGG_CD_list.txt -n -o KEGG_CD_with_KO_table.txt
 ```
 
 ## column_extractor
@@ -51,7 +51,7 @@ table_grep.py -i big_table.txt -k new_keyword -o key_table.txt
 ```
 
 ## keywords2fasta
-Given a header keywords list, performs a positive or negative headers and sequences extraction.
+Given a header keywords list, performs a positive or negative extraction of headers and related sequences.
 
 
 ## sum_count

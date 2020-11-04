@@ -82,3 +82,6 @@ Performs grep-based per-line table processing, also returns the table header.
 
 ## table2psqldb
 Given a PostgreSQL table address and text table, uploads the text table as SQL table. Also provides recognition of some data types.
+
+## cyr2lat
+Mutate a text by replacing of some cyrillic characters by similar latin.

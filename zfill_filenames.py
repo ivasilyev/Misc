@@ -43,3 +43,4 @@ if __name__ == '__main__':
     logging.info(f"Process '{input_dir}'")
     zfill_filenames(input_dir)
     logging.info("Completed")
+

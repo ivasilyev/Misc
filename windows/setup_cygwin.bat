@@ -1,10 +1,10 @@
 @echo off
 chcp 65001
 
+REM Run this script with elevated permissions
 REM Download fresh or not (I personally prefer 2.909) Cygwin binary from:
 REM https://cygwin.com/setup-x86_64.exe
 REM So it must be in your user's "Downloads" folder
-REM Run this script with elevated permissions
 
 net session >nul 2>&1
 if %errorLevel% == 0 (
@@ -19,7 +19,7 @@ set "CYGWIN_DIR=%PROGRAMDATA%/Cygwin"
 set "CYGWIN_PACKAGES_DIR=%CYGWIN_DIR%/packages"
 set "SITE=http://mirror.team-cymru.com/cygwin/"
 
-md "%CYGWIN_PACKAGES_DIR%"
+mkdir "%CYGWIN_PACKAGES_DIR%"
 cd /d "%CYGWIN_DIR%"
 
 copy /Y ^
@@ -84,5 +84,5 @@ setup_cygwin.exe ^
         xinit ^
         zip
 
-echo
+echo (
 timeout 15

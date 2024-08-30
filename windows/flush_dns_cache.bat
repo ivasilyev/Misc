@@ -2,5 +2,6 @@
 
 REM Run this script with elevated permissions
 
-notepad "%systemroot%\System32\drivers\etc\hosts"
+ipconfig /flushdns
+
 timeout 15

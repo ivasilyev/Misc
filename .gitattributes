@@ -1,0 +1,8 @@
+
+# Linux forced line-endings
+*.sh text eol=lf
+*.py text eol=lf
+
+# Windows forced line-endings
+*.bat text eol=crlf
+*.cmd text eol=crlf

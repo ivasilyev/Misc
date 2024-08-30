@@ -1,4 +1,4 @@
-# Misc /  pytho
+# Misc / python
 The repository for my compact-sized Python tools.
 
 >**WARNINGS/DISCLAIMERS**

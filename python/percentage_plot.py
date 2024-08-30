@@ -111,7 +111,7 @@ sampleDF.pivot(mergeColumn, "Sample", "Value").fillna(0).reset_index().to_csv(st
 meanDF.fillna(0).reset_index().to_csv(str(ends_with_slash(outputDir) + '.'.join(inputFile.rsplit('/', 1)[-1].split('.')[:-1]) + "_merged_by_" + mergeColumn + "_samples_stat.txt"), sep='\t', index=False)
 totalDF.fillna(0).reset_index().to_csv(str(ends_with_slash(outputDir) + '.'.join(inputFile.rsplit('/', 1)[-1].split('.')[:-1]) + "_merged_by_" + mergeColumn + "_global_stat.txt"), sep='\t', index=False, header=False)
 
-Dataframe visualization
+# Dataframe visualization
 
 seaborn.set(font_scale=.05)
 fig, ax = matplotlib.pyplot.subplots(1, 1)

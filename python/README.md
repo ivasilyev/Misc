@@ -1,5 +1,5 @@
-# Misc
-The repository for my compact-sized tools.
+# Misc /  pytho
+The repository for my compact-sized Python tools.
 
 >**WARNINGS/DISCLAIMERS**
 

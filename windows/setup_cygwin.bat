@@ -24,65 +24,65 @@ cd /d "%CYGWIN_DIR%"
 
 copy /Y ^
     "%USERPROFILE%\Downloads\setup-x86_64.exe" ^
-    "setup_cygwin.exe"
+    "%CYGWIN_DIR%\setup-x86_64.exe"
 
-setup_cygwin.exe ^
+setup-x86_64.exe ^
     --force-current ^
     --local-package-dir "%CYGWIN_PACKAGES_DIR%" ^
     --only-site ^
     --quiet-mode ^
     --root "%CYGWIN_DIR%" ^
     --site "%SITE%" ^
-    --packages ^
-        ImageMagick ^
-        autoconf ^
-        automake ^
-        bash-completion ^
-        bash-completion-cmake ^
-        binutils ^
-        build-essential ^
-        bzip2 ^
-        ca-certificates ^
-        chere ^
-        cmake ^
-        cmake-gui ^
-        coreutils ^
-        cron ^
-        curl ^
-        cygutils ^
-        diffutils ^
-        gcc-core ^
-        gcc-g++ ^
-        git ^
-        gnu-free-fonts ^
-        gzip ^
-        iperf ^
-        jq ^
-        lame ^
-        lame-mp3x ^
-        libboost-devel ^
-        libtool ^
-        libusb-devel ^
-        links ^
-        lynx ^
-        make ^
-        mercurial ^
-        nano ^
-        openssh ^
-        p7zip ^
-        patchutils ^
-        python3-devel ^
-        sshpass ^
-        tar ^
-        texlive ^
-        texlive-collection-fontutils ^
-        texlive-collection-latex ^
-        tree ^
-        unzip ^
-        vim ^
-        wget ^
-        xinit ^
-        zip
+    --upgrade-also ^
+    --packages ImageMagick ^
+    --packages autoconf ^
+    --packages automake ^
+    --packages bash-completion ^
+    --packages bash-completion-cmake ^
+    --packages binutils ^
+    --packages build-essential ^
+    --packages bzip2 ^
+    --packages ca-certificates ^
+    --packages chere ^
+    --packages cmake ^
+    --packages cmake-gui ^
+    --packages coreutils ^
+    --packages cron ^
+    --packages curl ^
+    --packages cygutils ^
+    --packages diffutils ^
+    --packages gcc-core ^
+    --packages gcc-g++ ^
+    --packages git ^
+    --packages gnu-free-fonts ^
+    --packages gzip ^
+    --packages iperf ^
+    --packages jq ^
+    --packages lame ^
+    --packages lame-mp3x ^
+    --packages libboost-devel ^
+    --packages libtool ^
+    --packages libusb-devel ^
+    --packages links ^
+    --packages lynx ^
+    --packages make ^
+    --packages mercurial ^
+    --packages nano ^
+    --packages openssh ^
+    --packages p7zip ^
+    --packages patchutils ^
+    --packages python3-devel ^
+    --packages sshpass ^
+    --packages tar ^
+    --packages texlive ^
+    --packages texlive-collection-fontutils ^
+    --packages texlive-collection-latex ^
+    --packages tree ^
+    --packages unzip ^
+    --packages vim ^
+    --packages wget ^
+    --packages xinit ^
+    --packages zip
 
 echo (
 timeout 15

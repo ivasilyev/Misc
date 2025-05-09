@@ -11,7 +11,8 @@ $user = "user"
 
 foreach ($disk in $disks) {
     # Define full folder path
-    $folderPath = "$($disk.DriveLetter):\$folderName"
+    $letter = "$($disk.DriveLetter)"
+    $folderPath = "${letter}:\$folderName"
 
     # Create the folder if it doesn't exist
     if (!(Test-Path -Path $folderPath)) {
@@ -34,11 +35,8 @@ foreach ($disk in $disks) {
     Write-Host "Granted NTFS permissions to '$user' on $folderPath" -ForegroundColor Green
 
     # Share the folder
-    $shareName = $("$folderName-$($disk.DriveLetter)").ToLower()
-    if (!(Get-SmbShare -Name $shareName -ErrorAction SilentlyContinue)) {
-        New-SmbShare -Name $shareName -Path "${folderPath}" -FullAccess $user
-        Write-Host "Shared $folderPath as $shareName with full access for '$user'" -ForegroundColor Green
-    } else {
+    $shareName = $("${folderName}-${letter}").ToLower()
+    if (Get-SmbShare -Name $shareName -ErrorAction SilentlyContinue) {
         Write-Host "Share $shareName already exists" -ForegroundColor Yellow
     }
 

@@ -38,7 +38,10 @@ foreach ($disk in $disks) {
     $shareName = $("${folderName}-${letter}").ToLower()
     if (Get-SmbShare -Name $shareName -ErrorAction SilentlyContinue) {
         Write-Host "Share $shareName already exists" -ForegroundColor Yellow
+        Remove-SmbShare -Name "${shareName}" -Force
     }
+    New-SmbShare -Name "${shareName}" -Description "Share on the disk ${letter}" -Path "${folderPath}" -FullAccess $user
+    Write-Host "Shared $folderPath as $shareName with full access for '$user'" -ForegroundColor Green
 
     # Remove access for "Everyone" from the share permissions
     Revoke-SmbShareAccess -Name $shareName -AccountName "Everyone" -Force

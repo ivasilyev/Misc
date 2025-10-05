@@ -1,7 +1,7 @@
 @echo off
 
 REM www.oreilly.com/library/view/windows-2000-quick/0596000170/ch06s08.html
-color 0E
+color F0
 
 cd /d "%~dp0"
 set "TOOL=torrserver"

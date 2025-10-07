@@ -6,8 +6,8 @@ color F0
 cd /d "%~dp0"
 
 set "TOOL=grafana"
-echo Do not forget to forward the %TOOL% port via Windows firewall
-echo Access address: "http://127.0.0.1:3000"
+echo Start %TOOL%
+echo Check http://127.0.0.1:3000
 
 bin\grafana.exe server ^
     --config="%cd%\%TOOL%.ini" > "%TOOL%.log" 2>&1

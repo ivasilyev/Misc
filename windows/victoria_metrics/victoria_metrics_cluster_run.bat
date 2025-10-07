@@ -17,3 +17,5 @@ timeout 1
 echo Start VictoriaMetrics agent
 cmd /c start "" "vmagent_run.bat"
 timeout 1
+
+exit

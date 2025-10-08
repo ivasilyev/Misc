@@ -5,7 +5,15 @@ color F0
 
 cd /d "%~dp0"
 set "TOOL=torrserver"
-echo Start %TOOL%
-"TorrServer-windows-amd64.exe" ^
-  --port 8090 ^
-  --ip 0.0.0.0  > "%TOOL%.log" 2>&1
+set "HTTP_PORT=8090"
+
+title %TOOL%
+
+for /L %%i in () do (
+    echo Start %TOOL%
+    echo Check http://127.0.0.1:%HTTP_PORT%
+    "TorrServer-windows-amd64.exe" ^
+        --httpauth ^
+        --ip="0.0.0.0" ^
+        --port="%HTTP_PORT%" > "%TOOL%.log" 2>&1
+)

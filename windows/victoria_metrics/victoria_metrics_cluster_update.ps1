@@ -10,12 +10,10 @@ $folder = "victoria-metrics-windows-amd64-${release_tag}-cluster"
 $file = "${folder}.zip"
 Invoke-WebRequest "https://github.com/${repository}/releases/download/${release_tag}/${file}" -OutFile "${file}"
 Expand-Archive "${file}" -DestinationPath .
-Get-ChildItem -Path "${folder}" -Recurse -File | Move-Item -Force -Destination .
 Remove-Item -LiteralPath "${file}" -Force -Recurse
 
 $folder = "vmutils-windows-amd64-${release_tag}"
 $file = "${folder}.zip"
 Invoke-WebRequest "https://github.com/${repository}/releases/download/${release_tag}/${file}" -OutFile "${file}"
 Expand-Archive "${file}" -DestinationPath .
-Get-ChildItem -Path "${folder}" -Recurse -File | Move-Item -Force -Destination .
 Remove-Item -LiteralPath "${file}" -Force -Recurse

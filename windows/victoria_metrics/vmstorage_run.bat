@@ -6,9 +6,9 @@ color F0
 cd /d "%~dp0"
 
 set "TOOL=vmstorage"
-set "TOOL_DATA_DIRECTORY=I:\Program Files (x86)\VictoriaMetrics\vmstorage-data"
-set "HTTP_USERNAME=victoriametrics"
-set "HTTP_PASSWORD=victoriametrics"
+set "TOOL_DATA_DIRECTORY="
+set "HTTP_USERNAME="
+set "HTTP_PASSWORD="
 set "VM_STORAGE_HTTP_PORT=8482"
 set "VM_STORAGE_INSERT_PORT=8400"
 set "VM_STORAGE_SELECT_PORT=8401"

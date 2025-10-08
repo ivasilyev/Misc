@@ -6,8 +6,8 @@ color F0
 cd /d "%~dp0"
 
 set "TOOL=vmselect"
-set "HTTP_USERNAME=victoriametrics"
-set "HTTP_PASSWORD=victoriametrics"
+set "HTTP_USERNAME="
+set "HTTP_PASSWORD="
 set "VM_SELECT_HTTP_PORT=8481"
 set "VM_STORAGE_SELECT_PORT=8401"
 set "VM_STORAGE_URL=127.0.0.1:%VM_STORAGE_SELECT_PORT%"

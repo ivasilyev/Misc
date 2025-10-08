@@ -6,8 +6,8 @@ color F0
 cd /d "%~dp0"
 
 set "TOOL=vminsert"
-set "HTTP_USERNAME=victoriametrics"
-set "HTTP_PASSWORD=victoriametrics"
+set "HTTP_USERNAME="
+set "HTTP_PASSWORD="
 set "VM_INSERT_HTTP_PORT=8480"
 set "VM_STORAGE_INSERT_PORT=8400"
 set "VM_STORAGE_URL=127.0.0.1:%VM_STORAGE_INSERT_PORT%"

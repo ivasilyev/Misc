@@ -37,6 +37,7 @@ foreach ($id in $ids) {
         $videoUrl = "https://www.youtube.com/watch?v=${id}"
 		&"${yt}" `
 			'--abort-on-unavailable-fragment' `
+			'--mtime' `
 			'--embed-chapters' `
 			'--embed-metadata' `
 			'--min-sleep-interval=60' `

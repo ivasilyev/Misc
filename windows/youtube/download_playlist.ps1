@@ -6,6 +6,9 @@ param(
     [string] $downloadFolder
 )
 
+# Usage: 
+# powershell -NoLogo -ExecutionPolicy Bypass -Command "download_playlist.ps1 -playlistUrl 'https://www.youtube.com/@playlist/videos' -downloadFolder 'C:\playlist'"
+
 Write-Host "Params: playlistUrl=$playlistUrl downloadFolder=$downloadFolder"
 
 $yt = "yt-dlp.exe"
@@ -45,7 +48,7 @@ foreach ($id in $ids) {
 			'--sleep-interval=15' `
 			'--sleep-requests=3' `
 			'--sleep-subtitles=3' `
-			'--proxy=socks5://127.0.0.1:8000' `
+			'--proxy=socks5://127.0.0.1:8080' `
 			'--cookies-from-browser=firefox:12345678.default-release' `
 			'--no-skip-unavailable-fragments' `
 			'--no-abort-on-unavailable-fragments' `

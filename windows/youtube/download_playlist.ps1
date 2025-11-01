@@ -16,6 +16,8 @@ $yt = "yt-dlp.exe"
 $timestamp = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $tempFile = Join-Path -Path $env:TEMP -ChildPath ("yt_ids_{0}.txt" -f "${timestamp}")
 
+Set-Location `
+	-Path "${PSScriptRoot}"
 &"${yt}" `
 	'--ignore-errors' `
 	'--flat-playlist' `

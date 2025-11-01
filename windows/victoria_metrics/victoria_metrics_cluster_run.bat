@@ -1,5 +1,5 @@
 @echo off
-
+chcp 65001 > NULL
 cd /d "%~dp0"
 
 echo Start VictoriaMetrics storage

@@ -20,8 +20,30 @@ foreach ($dir in ${sourceDirs}) {
 
     # If linkPath already exists, skip
     if (Test-Path -LiteralPath "${linkPath}") {
-        Write-Host -ForegroundColor Gray "Skipping: '${linkName}' already exists in target."
-        continue
+        $existing = Get-Item `
+            -ErrorAction SilentlyContinue `
+            -Force `
+            -LiteralPath "${linkPath}"
+
+        if (${existing}.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+            # If it's a symlink — remove
+            try {
+                Write-Host `
+                    -ForegroundColor Yellow `
+                    "Remove symlink '${linkPath}'"
+                (Get-Item "${linkPath}").Delete()
+            }
+            catch {
+                Write-Warning "Could not remove existing symlink '${linkPath}' — skipping"
+                continue
+            }
+        } else {
+            # Exists but not a symlink
+            Write-Host `
+                -ForegroundColor Gray `
+                "Skipping: '${linkName}' already exists in target"
+            continue
+        }
     }
 
     # Create junction

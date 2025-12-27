@@ -1,7 +1,7 @@
 @echo off
 
 set "SCRIPT_DIR=%~dp0"
-set "BASE_NAME=check_ovpn"
+set "BASE_NAME=CheckOpenVPN"
 set "TARGET_DIR=C:\!SCRIPTS\%BASE_NAME%\"
 
 md "%TARGET_DIR%"
@@ -21,6 +21,9 @@ powershell -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -Command "
 
 echo Then go to Security options and use the Administrators group
 start "" taskschd.msc
+
+echo Also add the OpenVPN network connection
+start "" ncpa.cpl
 
 start "" explorer "%TARGET_DIR%"
 

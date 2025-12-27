@@ -4,6 +4,8 @@ set "SCRIPT_DIR=%~dp0"
 
 cd /d "%SCRIPT_DIR%"
 
+echo Launch programs by user
+
 rem Paste commands below
 
 echo Minimize all windows and show the Desktop

@@ -4,6 +4,8 @@ set "SCRIPT_DIR=%~dp0"
 
 cd /d "%SCRIPT_DIR%"
 
+echo Launch programs by admin
+
 REM echo Start VM Audio fix
 REM cd /d "%SCRIPT_DIR%\VMAB"
 REM start cmd /c "VMAB.cmd"

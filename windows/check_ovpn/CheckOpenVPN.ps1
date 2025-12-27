@@ -2,8 +2,8 @@
 # Not using "$Env:USERPROFILE" here
 $userName = "User"
 $vpnProfile = "MyCon"
-$vpnProfileFile = "C:\Users\$userName\OpenVPN\config\${vpnProfile}.ovpn"
-$vpnLogFile = "C:\Users\$userName\OpenVPN\log\${vpnProfile}.log"
+$vpnProfileFile = "C:\Users\${userName}\OpenVPN\config\${vpnProfile}.ovpn"
+$vpnLogFile = "C:\Users\${userName}\OpenVPN\log\${vpnProfile}.log"
 $openVpnDirectoryPath = "$Env:PROGRAMFILES\OpenVPN\bin"
 $vpnConnectionName = "OpenVPN TAP-Windows6"
 $vpnConnectionLine = netsh int ipv4 show interfaces | findstr /C:"${vpnConnectionName}"

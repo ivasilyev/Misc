@@ -20,19 +20,19 @@ if ($vpnConnectionStatus) {
     cmd /c "sc config `"${serviceName}`" start= disabled"
   }
 
-  Write-Host "Kill all OpenVPN processes"
+  Write-Host -ForegroundColor Yellow "Kill all OpenVPN processes"
   cmd /c "taskkill /F /IM openvpn.exe /IM openvpn-gui.exe /IM openvpnserv.exe /IM openvpnserv2.exe"
 
-  Write-Host "Flush local DNS cache"
+  Write-Host -ForegroundColor Yellow "Flush local DNS cache"
   cmd /c "ipconfig /flushdns"
 
-  Write-Host "Start OpenVPN with the connection profile ${vpnProfile}"
+  Write-Host -ForegroundColor Yellow "Start OpenVPN with the connection profile ${vpnProfile}"
   # Start-Process -FilePath $openVpnDirectoryPath\openvpn-gui.exe -ArgumentList "--connect `"$vpnProfileFile`"" -NoNewWindow
   Start-Process `
     -FilePath "${openVpnDirectoryPath}\openvpn.exe" `
     -ArgumentList "--config `"${vpnProfileFile}`" --log `"${vpnLogFile}`"" `
     -Verb RunAs
   Start-Sleep -Seconds 5
-  cmd /c "wmic process where name=`"openvpn.exe`" call setpriority `"real time`""
-  Write-Host "OpenVPN restarted with profile: $vpnProfile" -ForegroundColor Yellow
+  cmd /c "wmic process where name=`"openvpn.exe`" call setpriority `"realtime`""
+  Write-Host -ForegroundColor Green "OpenVPN restarted with profile: ${vpnProfile}"
 }

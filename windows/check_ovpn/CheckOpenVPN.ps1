@@ -32,7 +32,10 @@ if ($vpnConnectionStatus) {
     -FilePath "${openVpnDirectoryPath}\openvpn.exe" `
     -ArgumentList "--config `"${vpnProfileFile}`" --log `"${vpnLogFile}`"" `
     -Verb RunAs
+
+  Write-Host -ForegroundColor Yellow "Set maximal OpenVPN process priority"
   Start-Sleep -Seconds 5
   cmd /c "wmic process where name=`"openvpn.exe`" call setpriority `"realtime`""
+
   Write-Host -ForegroundColor Green "OpenVPN restarted with profile: ${vpnProfile}"
 }

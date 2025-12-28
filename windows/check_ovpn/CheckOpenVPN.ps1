@@ -1,11 +1,12 @@
 # Define variables
-# Not using "$Env:USERPROFILE" here
 $userName = "User"
 $vpnProfile = "MyCon"
+$vpnConnectionName = "OpenVPN TAP-Windows6"
+#
+# Not using "$Env:USERPROFILE" here
 $vpnProfileFile = "C:\Users\${userName}\OpenVPN\config\${vpnProfile}.ovpn"
 $vpnLogFile = "C:\Users\${userName}\OpenVPN\log\${vpnProfile}.log"
 $openVpnDirectoryPath = "$Env:PROGRAMFILES\OpenVPN\bin"
-$vpnConnectionName = "OpenVPN TAP-Windows6"
 $vpnConnectionLine = netsh int ipv4 show interfaces | findstr /C:"${vpnConnectionName}"
 $vpnConnectionStatus = ${vpnConnectionLine} -Match " connected "
 

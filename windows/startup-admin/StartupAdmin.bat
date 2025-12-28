@@ -16,6 +16,10 @@ cd /d "%SCRIPT_DIR%"
 call "vmware.bat"
 timeout 10
 
+rem Paste commands below
+
+
+
 echo Minimize all windows and show the Desktop
 cd /d "%SCRIPT_DIR%"
 powershell -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -Command "(New-Object -ComObject shell.application).toggleDesktop()"

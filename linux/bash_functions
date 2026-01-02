@@ -1,0 +1,118 @@
+# export CFG_FILE="${HOME}/.bash_functions" && rm -f "${CFG_FILE}" && nano "${CFG_FILE}" 
+
+function get_github_dl_links {
+    # get_github_dl_links <user> <repository>
+    # e.g. 'get_github_dl_links prometheus node_exporter' for 'https://github.com/prometheus/node_exporter'
+    REPO="$1/$2" && \
+    PAGE="$(curl -s https://api.github.com/repos/${REPO}/releases/latest)" && \
+    VER="$(
+        echo "${PAGE}" \
+        | grep "tag_name" \
+        | cut -d ":" -f 2,3 \
+        | tr -d '\", '\
+    )" && \
+    URL="$(
+        echo "${PAGE}" \
+        | grep "browser_download_url" \
+        | grep "${VER}" \
+        | cut -d ":" -f 2,3 \
+        | tr -d ' \"'\
+    )" && \
+    echo "${URL}"
+}
+
+function link_to_file {
+    echo "$(
+        echo "$1" \
+        | perl -nE 'say/\/([^\/]+)$/' \
+    )"
+}
+
+function download_and_untar {
+    # download_and_untar <uri> <dir_name>
+    mkdir -p "${2}"
+    curl -fsSL "${1}" \
+    | tar -C "${2}" -xzf -
+    echo "'${1}' -> '${2}'"
+}
+
+function remove_middle_dirs {
+    # remove_middle_dir <dir_name>
+    for RM_DIR in "$(find "${1}" -mindepth 1 -maxdepth 1 -type d)"
+        do
+        mv "${RM_DIR}"/* "${1}"/
+        rm -rf "${RM_DIR}"
+        done
+}
+
+function force_docker_pull {
+    # force_docker_pull <img_name>
+    while true
+    do
+    if docker pull "$1"
+    then
+      return
+    fi
+    done
+}
+
+function force_git_pull {
+    while true
+    do
+        if git pull --quiet
+        then
+            return
+        fi
+    done
+}
+
+function get_default_nic {
+    echo "$(
+        ip route \
+        | grep default \
+        | grep -oP '(?<=dev )[^ ]+'
+    )"
+}
+
+function get_external_ip {
+    echo "$(
+        ip route get 1 \
+        | awk '{print $(NF-2);exit}' 
+    )"
+}
+
+function short_rsync {
+    rsync \
+        --archive \
+        --ignore-existing \
+        --perms \
+        --progress \
+        --stats \
+        --verbose \
+        --xattrs \
+        "${1}" \
+        "${2}"
+}
+
+function find_ip_by_mac() {
+    # find_ip_by_mac "00:0C:29:9A:70:CF"
+    arp -a \
+    | grep \
+        --ignore-case \
+        --text\
+        "$(
+            echo "${1}" \
+            | sed 's/:/-/g'
+        )" \
+    | sort --unique
+}
+
+function apt_purge() {
+    sudo apt-get purge -y "${1}"
+    sudo apt-get purge -y $(apt-cache depends "${1}" | awk '{ print $2 }' | tr '\n' ' ')
+    sudo apt-get autoremove -y
+    sudo apt-get update -y
+    sudo apt-get check -y
+    sudo apt-get -f install -y
+    sudo apt-get autoclean -y
+}

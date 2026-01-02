@@ -1,0 +1,4 @@
+# export CFG_FILE="${HOME}/.bash_aliases" && rm -f "${CFG_FILE}" && nano "${CFG_FILE}" 
+
+alias @yt="${YT_DIR}download_hd_video.sh"
+alias @mp4="${YT_DIR}convert_to_mp4.sh"

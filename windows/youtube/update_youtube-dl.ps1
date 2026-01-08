@@ -31,25 +31,25 @@ $folder = "ffmpeg-master-${release_tag}-win64-gpl"
 $file = "${folder}.zip"
 Invoke-WebRequest "https://github.com/${repository}/releases/download/${release_tag}/${file}" -OutFile "${file}"
 Expand-Archive `
-	-DestinationPath . `
-	-Force `
-	"${file}"
+  -DestinationPath . `
+  -Force `
+  "${file}"
 foreach ($processName in @("ffmpeg", "ffplay", "ffprobe")) {
     Stop-Process -Force -Name ${processName} 2>"${NULL}"
 }
 Get-ChildItem `
-	-File `
-	-Path "${folder}\bin" `
-	-Recurse `
+  -File `
+  -Path "${folder}\bin" `
+  -Recurse `
 | Move-Item `
-	-Destination . `
-	-Force
+  -Destination . `
+  -Force
 Write-Host -ForegroundColor Cyan "Cleanup"
 foreach ($path in @("${folder}", "${file}")) {
-	Remove-Item `
-		-Force `
-		-LiteralPath "${path}" `
-		-Recurse
+  Remove-Item `
+    -Force `
+    -LiteralPath "${path}" `
+    -Recurse
 }
 
 $repository = "denoland/deno"
@@ -62,10 +62,10 @@ $file = "deno-x86_64-pc-windows-msvc.zip"
 Invoke-WebRequest "https://github.com/${repository}/releases/download/${release_tag}/${file}" -OutFile "${file}"
 Stop-Process -Force -Name deno 2>"${NULL}"
 Expand-Archive `
-	-DestinationPath . `
-	-Force `
-	"${file}"
+  -DestinationPath . `
+  -Force `
+  "${file}"
 Remove-Item `
-	-Force `
-	-LiteralPath "${file}" `
-	-Recurse
+  -Force `
+  -LiteralPath "${file}" `
+  -Recurse

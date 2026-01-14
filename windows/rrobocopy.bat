@@ -35,7 +35,7 @@ echo(
 
 for /D %%i in ("%SRC%\"*) do (
     echo Copying "%%~ni"
-    Robocopy "%%i" "%DST%\%%~ni" /DCOPY:T /COPYALL /E /R:5
+    Robocopy "%%i" "%DST%\%%~ni" /DCOPY:T /COPYALL /E /R:1 /W:1
 )
 
 echo(

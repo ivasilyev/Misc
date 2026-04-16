@@ -17,7 +17,6 @@ function downloadGitRelease {
     $wc.Downloadfile("https://github.com/${repository}/releases/download/${release_tag}/${file}", "${file}")
 }
 
-
 # youtube-dl
 Stop-Process -Force -Name "youtube-dl" 2>"${NULL}"
 downloadGitRelease -repository "ytdl-org/youtube-dl" -file "youtube-dl.exe"
@@ -43,7 +42,7 @@ Expand-Archive `
     -Force `
     "${file}"
 foreach ($processName in @("ffmpeg", "ffplay", "ffprobe")) {
-  Stop-Process -Force -Name ${processName} 2>"${NULL}"
+    Stop-Process -Force -Name ${processName} 2>"${NULL}"
 }
 Get-ChildItem `
     -File `
@@ -54,10 +53,10 @@ Get-ChildItem `
     -Force
 Write-Host -ForegroundColor Cyan "Cleanup"
 foreach ($path in @("${folder}", "${file}")) {
-  Remove-Item `
-    -Force `
-    -LiteralPath "${path}" `
-    -Recurse
+    Remove-Item `
+        -Force `
+        -LiteralPath "${path}" `
+        -Recurse
 }
 
 # deno
@@ -68,7 +67,33 @@ Expand-Archive `
     -DestinationPath . `
     -Force `
     "${file}"
+Write-Host -ForegroundColor Cyan "Cleanup"
 Remove-Item `
     -Force `
     -LiteralPath "${file}" `
     -Recurse
+
+# bun
+$file = "bun-windows-x64-baseline-profile.zip"
+Stop-Process -Force -Name "bun" 2>"${NULL}"
+downloadGitRelease -repository "oven-sh/bun" -file "${file}"
+Expand-Archive `
+    -DestinationPath . `
+    -Force `
+    "${file}"
+Get-ChildItem `
+    -File `
+    -Path "${folder}\bun-windows-x64-baseline-profile" `
+    -Recurse `
+| Move-Item `
+    -Destination . `
+    -Force
+Write-Host -ForegroundColor Cyan "Cleanup"
+Remove-Item `
+    -Force `
+    -LiteralPath "${file}" `
+    -Recurse
+
+# quickjs
+Stop-Process -Force -Name "quickjs" 2>"${NULL}"
+downloadGitRelease -repository "oven-sh/bun" -file "qjs-windows-x86_64.exe"

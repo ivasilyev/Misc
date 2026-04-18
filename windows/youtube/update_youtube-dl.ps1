@@ -74,7 +74,8 @@ Remove-Item `
     -Recurse
 
 # bun
-$file = "bun-windows-x64-baseline-profile.zip"
+$folder = "bun-windows-x64-baseline-profile"
+$file = "${folder}.zip"
 Stop-Process -Force -Name "bun" 2>"${NULL}"
 downloadGitRelease -repository "oven-sh/bun" -file "${file}"
 Expand-Archive `
@@ -83,17 +84,19 @@ Expand-Archive `
     "${file}"
 Get-ChildItem `
     -File `
-    -Path "${folder}\bun-windows-x64-baseline-profile" `
+    -Path "${folder}" `
     -Recurse `
 | Move-Item `
     -Destination . `
     -Force
 Write-Host -ForegroundColor Cyan "Cleanup"
-Remove-Item `
-    -Force `
-    -LiteralPath "${file}" `
-    -Recurse
+foreach ($path in @("${folder}", "${file}")) {
+    Remove-Item `
+        -Force `
+        -LiteralPath "${path}" `
+        -Recurse
+}
 
 # quickjs
-Stop-Process -Force -Name "quickjs" 2>"${NULL}"
-downloadGitRelease -repository "oven-sh/bun" -file "qjs-windows-x86_64.exe"
+Stop-Process -Force -Name "qjs-windows-x86_64" 2>"${NULL}"
+downloadGitRelease -repository "quickjs-ng/quickjs" -file "qjs-windows-x86_64.exe"

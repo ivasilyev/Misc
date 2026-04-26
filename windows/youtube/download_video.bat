@@ -27,7 +27,7 @@ echo(
 set "DL_DIR=%USERPROFILE%\Videos\youtube-dl"
 mkdir "%DL_DIR%"
 
-powershell -NoLogo -ExecutionPolicy Bypass -File "%cd%\%~n0.ps1"
+powershell -NoLogo -ExecutionPolicy Bypass -File "%cd%\%~n0.ps1" -videoUrl "%URL%" -downloadFolder "%DL_DIR%"
 
 echo(
 echo(

@@ -1,6 +1,71 @@
 
 Set-Location -Path "${PSScriptRoot}"
 
+$maxRetries = 5
+$baseDelay = 2  # Initial wait in seconds
+
+function downloadFile() {
+    param (
+        [string]$url,
+        [string]$file
+    )
+    foreach ($attempt in 1..${maxRetries}) {
+        $webClient = New-Object System.Net.WebClient
+        try {
+            Write-Host "Download ${url} for attempt ${attempt} of ${maxRetries}" -ForegroundColor Cyan
+            ${webClient}.DownloadFile("${url}", "${file}")
+            Write-Host "Downloaded ${file}" -ForegroundColor Cyan
+            return  # Exit the script/function upon success
+        }
+        catch {
+            Write-Warning "Attempt $attempt failed: $($_.Exception.Message)"
+
+            if ($attempt -lt $maxRetries) {
+                # Exponential Backoff: 2^1 * 2 = 4s, 2^2 * 2 = 8s, etc.
+                $delay = [Math]::Pow(2, ${attempt}) * ${baseDelay}
+                Write-Host "Waiting ${delay} seconds before next retry..." -ForegroundColor Yellow
+                Start-Sleep -Seconds ${delay}
+            }
+            else {
+                Write-Error "Final attempt failed. Manual intervention required."
+            }
+        }
+        finally {
+            if (${webClient}) { ${webClient}.Dispose() }
+        }
+    }
+}
+
+
+function getReleaseTag() {
+    param (
+        [string]$url
+    )
+    foreach ($attempt in 1..${maxRetries}) {
+        $webClient = New-Object System.Net.WebClient
+        try {
+            Write-Host -ForegroundColor Cyan "Get latest release"
+            $release_json = Invoke-WebRequest "${url}"
+            $release_tag = ("${release_json}" | ConvertFrom-Json)[0].tag_name
+            return ${release_tag} # Exit the script/function upon success
+        }
+        catch {
+            Write-Warning "Attempt $attempt failed: $($_.Exception.Message)"
+            if ($attempt -lt $maxRetries) {
+                # Exponential Backoff: 2^1 * 2 = 4s, 2^2 * 2 = 8s, etc.
+                $delay = [Math]::Pow(2, ${attempt}) * ${baseDelay}
+                Write-Host "Waiting ${delay} seconds before next retry..." -ForegroundColor Yellow
+                Start-Sleep -Seconds ${delay}
+            }
+            else {
+                Write-Error "Final attempt failed. Manual intervention required."
+            }
+        }
+    }
+    return "latest"
+}
+
+
 function downloadGitRelease {
     param (
         [string]$repository,
@@ -9,12 +74,10 @@ function downloadGitRelease {
     Write-Host -ForegroundColor Cyan "The current time is: $(Get-Date -UFormat "%Y.%m.%d %H:%M:%S")"
     Write-Host -ForegroundColor Cyan "Update repository ${repository}"
     $releases_url = "https://api.github.com/repos/${repository}/releases"
-    Write-Host -ForegroundColor Cyan "Get latest release"
-    $release_json = Invoke-WebRequest "${releases_url}"
-    $release_tag = ("${release_json}" | ConvertFrom-Json)[0].tag_name
+    $release_tag = getReleaseTag -url "${releases_url}"
     Write-Host -ForegroundColor Cyan "Download latest release: ${release_tag}"
-    $wc = New-Object net.webclient
-    $wc.Downloadfile("https://github.com/${repository}/releases/download/${release_tag}/${file}", "${file}")
+    $url = "https://github.com/${repository}/releases/download/${release_tag}/${file}"
+    downloadFile -url "${url}" -file "${file}"
 }
 
 # youtube-dl
@@ -35,8 +98,7 @@ Write-Host -ForegroundColor Cyan "Dowload latest release: ${release_tag}"
 Stop-Process -Force -Name "ffmpeg" 2>"${NULL}"
 $folder = "ffmpeg-master-${release_tag}-win64-gpl"
 $file = "${folder}.zip"
-$wc = New-Object net.webclient
-$wc.Downloadfile("https://github.com/${repository}/releases/download/${release_tag}/${file}", "${file}")
+downloadFile -url "https://github.com/${repository}/releases/download/${release_tag}/${file}" -file "${file}"
 Expand-Archive `
     -DestinationPath . `
     -Force `

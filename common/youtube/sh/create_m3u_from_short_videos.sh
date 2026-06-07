@@ -20,7 +20,7 @@ OUTPUT_M3U="$2"
 MAX_DURATION="$3"  # Maximum duration in seconds (e.g. 5 minutes = 300 seconds)
 
 # --- CONFIGURATION ---
-FFPROBE_PATH="ffprobe" # Change to full path if ffprobe is not in your system PATH
+${FFPROBE_PATH:="ffprobe"} # Change to full path if ffprobe is not in your system PATH
 
 # --- INITIALIZATION ---
 # Verify the target directory exists

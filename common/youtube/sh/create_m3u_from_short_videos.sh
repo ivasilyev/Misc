@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# curl -fsSLO "https://raw.githubusercontent.com/ivasilyev/Misc/refs/heads/master/common/youtube/sh/create_m3u_from_short_videos.sh"
+
 # Exit immediately if a command exits with a non-zero status,
 # if an undefined variable is used, or if a piped command fails.
 set -euo pipefail

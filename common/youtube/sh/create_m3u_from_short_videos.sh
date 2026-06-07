@@ -6,7 +6,7 @@ set -euo pipefail
 
 # --- ARGUMENT VALIDATION ---
 # Check if exactly two arguments are provided
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "Error: Missing required arguments." >&2
     echo "Usage: $0 <target_directory> <output_m3u_file>" >&2
     exit 1
@@ -15,10 +15,10 @@ fi
 # Assign positional parameters to descriptive variables
 TARGET_DIR="$1"
 OUTPUT_M3U="$2"
+MAX_DURATION="$3"  # Maximum duration in seconds (e.g. 5 minutes = 300 seconds)
 
 # --- CONFIGURATION ---
 FFPROBE_PATH="ffprobe" # Change to full path if ffprobe is not in your system PATH
-MAX_DURATION=300       # Maximum duration in seconds (5 minutes = 300 seconds)
 
 # --- INITIALIZATION ---
 # Verify the target directory exists

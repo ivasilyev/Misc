@@ -9,7 +9,8 @@ $disks = Get-Volume `
 $folderName = "Share"
 
 # Define user to grant access
-$user = "user"
+# $user = "user"
+$user = "$(whoami)"
 
 foreach ($disk in ${disks}) {
     Write-Host "Process disk ${disk}" -ForegroundColor Gray

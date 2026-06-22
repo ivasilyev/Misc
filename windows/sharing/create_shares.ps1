@@ -26,6 +26,8 @@ foreach ($disk in ${disks}) {
     # Create the folder if it doesn't exist
     if (!(Test-Path -Path "${folderPath}")) {
         New-Item -Path "${folderPath}" -ItemType Directory | Out-Null
+        $mountReadyFile = Join-Path "${folderPath}" ".mount_ready"
+        New-Item -ItemType File "${mountReadyFile}" | Out-Null
         Write-Host "Created folder: ${folderPath}" -ForegroundColor Green
     } else {
         Write-Host "Folder already exists: ${folderPath}" -ForegroundColor Yellow
